@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#f0ebe3"/>
+  <path d="M130 105 Q200 82 270 105 L280 232 Q200 248 120 232 Z" fill="#c9b99a"/>
+  <rect x="175" y="75" width="50" height="33" rx="6" fill="#b0a080"/>
+  <circle cx="320" cy="240" r="30" fill="#d4c4a8" opacity="0.5"/>
+  <circle cx="80" cy="60" r="20" fill="#d4c4a8" opacity="0.4"/>
+  <text x="200" y="278" text-anchor="middle" fill="#7a6a55" font-family="Arial,sans-serif" font-size="13">Фартук JKeratin — в работе</text>
+</svg>
