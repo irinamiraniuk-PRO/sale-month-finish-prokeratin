@@ -324,6 +324,101 @@
     }
 
     /* =============================================
+       ФОРМАТИРОВАНИЕ ОПИСАНИЙ ВНУТРИ КАРТОЧКИ
+       ============================================= */
+    .card__desc p { margin-bottom: 8px; }
+    .card__desc p:last-child { margin-bottom: 0; }
+    .card__desc ul { list-style: none; padding-left: 0; margin: 6px 0 10px; }
+    .card__desc li {
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .card__desc li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .card__desc strong { color: var(--text); font-weight: 600; }
+
+    /* подблок «Как смотрится в работе» */
+    .card__extra-img-block {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .card__extra-img-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .card__extra-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 8px;
+      background: var(--accent-lt);
+      display: block;
+    }
+
+    /* =============================================
+       TELEGRAM-БЛОК
+       ============================================= */
+    .tg-block {
+      background: #f0f8ff;
+      border: 2px solid #2AABEE;
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin-top: 24px;
+      text-align: center;
+    }
+    .tg-block__title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      line-height: 1.3;
+      color: var(--text);
+    }
+    .tg-block__list {
+      list-style: none;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .tg-block__list li {
+      font-size: 14px;
+      color: var(--text-muted);
+      padding-left: 18px;
+      position: relative;
+    }
+    .tg-block__list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #2AABEE;
+      font-weight: 700;
+    }
+    .tg-block__btn {
+      display: inline-block;
+      background: #2AABEE;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 40px;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .tg-block__btn:hover { opacity: .85; }
+
+    /* =============================================
        УТИЛИТЫ
        ============================================= */
     .spacer { height: 8px; }
@@ -359,7 +454,7 @@
       <li class="hint__item">хотите удобство в работе → <strong>Чаша L'AMARI</strong></li>
       <li class="hint__item">хотите быстрый эффект → <strong>Total Miracle</strong></li>
       <li class="hint__item">хотите прокачать образ мастера → <strong>Фартук JKeratin</strong></li>
-      <li class="hint__item">хотите улучшить результат процедуры → <strong>Маска для кожи головы</strong></li>
+      <li class="hint__item">хотите усилить результат процедуры → <strong>Маска для кожи головы</strong></li>
     </ul>
   </div>
 
@@ -414,6 +509,21 @@
     </p>
   </div>
 
+  <!-- ====== TELEGRAM-БЛОК ====== -->
+  <div class="tg-block">
+    <h2 class="tg-block__title">Пространство для мастеров, которые хотят расти 🔝</h2>
+    <ul class="tg-block__list">
+      <li>Цены ниже, чем на сайте</li>
+      <li>Спец-условия и промокоды</li>
+      <li>Уроки и честные разборы составов</li>
+      <li>Поддержка без «впаривания»</li>
+      <li>Только для своих</li>
+    </ul>
+    <a class="tg-block__btn" href="https://t.me/prokeratinprive" target="_blank" rel="noopener noreferrer">
+      Перейти в закрытый канал
+    </a>
+  </div>
+
 </div><!-- /page -->
 
 <script>
@@ -421,68 +531,151 @@
      ДАННЫЕ ТОВАРОВ
      Чтобы обновить товары — измените только этот массив.
      Поля:
-       name        — название товара
-       image       — путь к изображению (замените на свои фото)
-       price       — цена со скидкой (пустая строка = без цены)
-       oldPrice    — старая цена (пустая строка = не показывать)
-       benefit     — строка экономии (пустая строка = не показывать)
-       description — описание товара
-       trigger     — триггер / причина купить
+       name             — название товара
+       image            — путь к изображению (замените на свои фото)
+       price            — цена со скидкой (пустая строка = без цены)
+       oldPrice         — старая цена (пустая строка = не показывать)
+       benefit          — строка экономии (пустая строка = не показывать)
+       description      — HTML-описание (поддерживает <p>, <ul>, <li>, <strong>)
+       trigger          — триггер / причина купить
+       extraImage       — (опционально) путь к доп. фото
+       extraImageLabel  — (опционально) подпись к доп. фото
   ===================================================================== */
   const products = [
     {
-      name:        "Коллагеновый восполнитель LOVE POTION Gelatina 1000 мл",
-      image:       "images/product-1.svg",
-      price:       "252 BYN",
-      oldPrice:    "315 BYN",
-      benefit:     "экономия 63 BYN",
-      description: "Добавляет вау-блеск и плотность — тот самый «зеркальный» визуал, за который платят клиенты. Работает как усилитель результата, идеален как финальный акцент.",
-      trigger:     "Берут, когда хотят сделать результат визуально дороже"
+      name:     "Коллагеновый восполнитель LOVE POTION Gelatina 1000 мл",
+      image:    "images/product-1.svg",
+      price:    "252 BYN",
+      oldPrice: "315 BYN",
+      benefit:  "экономия 63 BYN",
+      description: `
+        <p>Love Potion Gelatina — это лёгкий коллагеновый уход, который даёт:</p>
+        <ul>
+          <li>визуальную плотность</li>
+          <li>глянец</li>
+          <li>убирает статику и мелкий пушок</li>
+          <li>и при этом не выпрямляет и не утяжеляет</li>
+        </ul>
+        <p><strong>📌 Где использовать в работе:</strong></p>
+        <ul>
+          <li>как закрытие процедуры (чтобы довести результат до вау)</li>
+          <li>после окрашивания (дать волосу полотность и блеск)</li>
+          <li>после холодного восстановления</li>
+          <li>как лёгкий уход/маска</li>
+          <li>как отдельная быстрая процедура</li>
+          <li>можно оставить как маску, можно закрыть на утюжок (если нужен более плотный визуал)</li>
+        </ul>
+        <p><strong>Если работаешь с утюгом:</strong> выдержала → слегка подсмыла → высушила → выпарила</p>
+        <p><strong>📌 Почему это удобно мастеру:</strong></p>
+        <ul>
+          <li>не даёт агрессивных испарений</li>
+          <li>без формальдегида</li>
+          <li>спокойно работаешь, не убиваешь ни себя испарениями, ни клиента</li>
+          <li>подходит даже для чувствительных клиентов</li>
+        </ul>
+        <p><strong>📌 Как продавать:</strong></p>
+        <p>Это идеальная история как отдельная услуга или доп к кератину/ботоксу.</p>
+        <p>👉 продаёшь как: "добавим вау-блеск и плотность, чтобы было прям зеркальное полотно"</p>
+        <p><strong>📌 Эффект:</strong> держится до 2 недель — это не лечение, это про визуал — но визуал именно тот, за который платят</p>
+        <p><strong>📌 Расход:</strong> в среднем от 10–15 г на процедуру</p>
+        <p><strong>📌 Форматы:</strong></p>
+        <ul>
+          <li>полная банка — 252 руб</li>
+          <li>50 г — 32 руб</li>
+          <li>100 г — 54 руб</li>
+        </ul>
+        <p>👉 универсальный инструмент</p>
+      `,
+      trigger: "Берут, когда хотят сделать результат визуально дороже"
     },
     {
-      name:        "Чаша с ручкой L'AMARI",
-      image:       "images/product-2.svg",
-      price:       "15,20 BYN",
-      oldPrice:    "19 BYN",
-      benefit:     "экономия 3,80 BYN",
-      description: "Удобная и устойчивая чаша для работы: не скользит, не переворачивается, комфортна в использовании.",
-      trigger:     "Мелочь, которая сильно упрощает работу каждый день"
+      name:     "Чаша с ручкой L'AMARI",
+      image:    "images/product-2.svg",
+      price:    "15,20 BYN",
+      oldPrice: "19 BYN",
+      benefit:  "экономия 3,80 BYN",
+      description: `
+        <p>Подходит для кератина, ботокса и окрашивания. Плотный пластик, удобная ручка, противоскользящая резинка на дне даёт отличную устойчивость — чаша не скользит и не переворачивается.</p>
+      `,
+      trigger: "Мелочь, которая сильно упрощает работу каждый день"
     },
     {
-      name:        "JKeratin Total Miracle 10 в 1 (50 мл)",
-      image:       "images/product-3.svg",
-      price:       "12 BYN",
-      oldPrice:    "15 BYN",
-      benefit:     "экономия 3 BYN",
-      description: "Концентрат с мгновенным эффектом: мягкость, плотность и глянец. Подходит как финальный штрих или экспресс-уход.",
-      trigger:     "Идеально, чтобы быстро усилить эффект и добавить ценности услуге"
+      name:     "JKeratin Total Miracle 10 в 1 (50 мл)",
+      image:    "images/product-3.svg",
+      price:    "12 BYN",
+      oldPrice: "15 BYN",
+      benefit:  "экономия 3 BYN",
+      description: `
+        <p>Концентрат с мгновенным эффектом: мягкость, плотность, глянец. Идеален как финальный акцент для мастера и экспресс-уход дома.</p>
+      `,
+      trigger: "Идеально, чтобы быстро усилить эффект и добавить ценности услуге"
     },
     {
-      name:        "Фартук парикмахерский JKeratin",
-      image:       "images/product-4.svg",
-      price:       "30,40 BYN",
-      oldPrice:    "48 BYN",
-      benefit:     "экономия 17,60 BYN",
-      description: "Делает образ мастера более аккуратным и дорогим. Качество + визуал = влияет на восприятие клиента.",
-      trigger:     "Работает на ваш имидж и чек"
+      name:     "Фартук парикмахерский JKeratin",
+      image:    "images/product-4.svg",
+      price:    "30,40 BYN",
+      oldPrice: "48 BYN",
+      benefit:  "экономия 17,60 BYN",
+      description: `
+        <p>Фартук JKeratin подчёркивает фигуру, аккуратность и статус мастера, делает визуал стильным и дорогим. А ещё у него реально крутое качество.</p>
+        <p>Из всех фартуков — именно тот, который работает на ваш имидж ✨</p>
+      `,
+      trigger:         "Работает на ваш имидж и чек",
+      extraImage:      "images/product-4b.svg",
+      extraImageLabel: "Как смотрится в работе:"
     },
     {
-      name:        "Urban Nature маска для кожи головы (200 мл)",
-      image:       "images/product-5.svg",
-      price:       "",
-      oldPrice:    "",
-      benefit:     "",
-      description: "Очищает кожу головы, убирает зуд и чувствительность, подготавливает к процедурам. Даёт более чистую базу, ровное нанесение состава и более стойкий результат.",
-      trigger:     "То, что усиливает результат ещё ДО процедуры"
+      name:     "Urban Nature маска для кожи головы (200 мл)",
+      image:    "images/product-5.svg",
+      price:    "",
+      oldPrice: "",
+      benefit:  "",
+      description: `
+        <p><strong>ЧТО ЭТО ЗА ПРОДУКТ И ЗАЧЕМ ОН ВАМ</strong></p>
+        <p>Эта маска создана для восстановления баланса кожи головы:</p>
+        <ul>
+          <li>нормализует себум</li>
+          <li>снимает зуд и чувствительность</li>
+          <li>убирает накопления стайлинга</li>
+          <li>подготавливает кожу головы к процедурам</li>
+        </ul>
+        <p><strong>📌 Как использовать:</strong></p>
+        <p>Перед процедурами: наносите → массаж → выдержка 5–10 минут → смываете</p>
+        <p>👉 Что даёт: чистая база, ровное нанесение, стойкий результат</p>
+        <p><strong>📌 Как отдельная услуга:</strong></p>
+        <ul>
+          <li>детокс кожи головы</li>
+          <li>восстановление баланса</li>
+        </ul>
+      `,
+      trigger: "То, что усиливает результат ещё ДО процедуры"
     },
     {
-      name:        "Активатор JKeratin Collagen Activator (200 мл)",
-      image:       "images/product-6.svg",
-      price:       "48,10 BYN",
-      oldPrice:    "74 BYN",
-      benefit:     "экономия 25,90 BYN",
-      description: "Усиливает действие составов, добавляет плотность и выраженный визуальный эффект (гладкость, блеск, тяжесть волоса). Особенно подходит для пористых, пустых, ослабленных волос.",
-      trigger:     "Добавляет тот самый эффект «дорогого результата»"
+      name:     "Активатор JKeratin Collagen Activator (200 мл)",
+      image:    "images/product-6.svg",
+      price:    "48,10 BYN",
+      oldPrice: "74 BYN",
+      benefit:  "экономия 25,90 BYN",
+      description: `
+        <p><strong>ЧТО ЭТО ЗА ПРОДУКТ И ЗАЧЕМ ОН ВАМ</strong></p>
+        <ul>
+          <li>усиливает действие состава</li>
+          <li>добавляет плотность</li>
+          <li>усиливает визуал</li>
+        </ul>
+        <p><strong>📌 Как использовать:</strong></p>
+        <p>Добавлять 10–15 г в состав</p>
+        <p>👉 Даёт: плотность, гладкость, антистатику</p>
+        <p><strong>📌 Идеально для:</strong></p>
+        <ul>
+          <li>пористых волос</li>
+          <li>ослабленных</li>
+          <li>повреждённых</li>
+        </ul>
+        <p><strong>📌 Как продавать:</strong></p>
+        <p>"Я усилю состав, чтобы волосы были плотнее и держали результат дольше"</p>
+      `,
+      trigger: "Добавляет тот самый эффект «дорогого результата»"
     }
   ];
 
@@ -497,6 +690,13 @@
     const card = document.createElement('article');
     card.className = 'card' + (hasPrice ? '' : ' card--no-price');
 
+    const extraBlock = p.extraImage
+      ? '<div class="card__extra-img-block">' +
+          '<p class="card__extra-img-label">' + escHtml(p.extraImageLabel || '') + '</p>' +
+          '<img class="card__extra-img" src="' + escHtml(p.extraImage) + '" alt="' + escHtml(p.name) + ' — в работе" loading="lazy" />' +
+        '</div>'
+      : '';
+
     card.innerHTML =
       '<img class="card__img" src="' + escHtml(p.image) + '" alt="' + escHtml(p.name) + '" loading="lazy" />' +
       '<div class="card__body">' +
@@ -506,8 +706,9 @@
           (p.oldPrice ? '<span class="card__old-price">' + escHtml(p.oldPrice) + '</span>' : '') +
         '</div>' +
         (p.benefit ? '<span class="card__benefit">\u2714 ' + escHtml(p.benefit) + '</span>' : '') +
-        '<p class="card__desc">' + escHtml(p.description) + '</p>' +
+        '<div class="card__desc">' + p.description + '</div>' +
         '<div class="card__trigger">' + escHtml(p.trigger) + '</div>' +
+        extraBlock +
       '</div>';
 
     container.appendChild(card);
